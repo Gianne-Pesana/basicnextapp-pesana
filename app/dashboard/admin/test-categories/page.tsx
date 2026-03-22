@@ -74,7 +74,7 @@ export default function Page() {
     };
 
     if (isPending || !session) {
-        return <div className="p-6">Loading...</div>; 
+        return <div className="p-6 text-slate-500">Loading categories...</div>; 
     }
 
     const filteredCategories = categories.filter(cat => 
@@ -85,83 +85,61 @@ export default function Page() {
   return (
     <PageGuardWrapper requiredRoles={["ADMINISTRATOR"]}>
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-x-6 bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-        <h1 className="text-xl font-bold text-gray-900 whitespace-nowrap">
-          Test Categories Management
+      <div className="flex items-center justify-between gap-x-6 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+        <h1 className="text-xl font-bold text-slate-900 tracking-tight">
+          Test Categories
         </h1>
 
         <div className="relative flex-1 max-w-md">
           <input
             type="text"
             placeholder="Search categories..."
-            className="w-full rounded-md border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+            className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 outline-none transition-all"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 font-bold"
-            onClick={() => setSearchQuery("")}
-          >
-            Clear
-          </button>
         </div>
 
         <ButtonGuardWrapper requiredRoles={["ADMINISTRATOR"]}>
           <button
             onClick={() => setIsAddModalOpen(true)}
-            className="rounded-md bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors shadow-sm whitespace-nowrap"
+            className="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-all shadow-sm hover:shadow-indigo-500/20 whitespace-nowrap"
           >
             + Add Category
           </button>
         </ButtonGuardWrapper>
       </div>
 
-      <AddCategoryModal 
-        isOpen={isAddModalOpen} 
-        onClose={() => setIsAddModalOpen(false)} 
-        onAdd={handleAddCategory} 
-      />
+      <AddCategoryModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onAdd={handleAddCategory} />
+      <DeleteCategoryModal isOpen={!!categoryToDelete} onClose={() => setCategoryToDelete(null)} onDelete={handleDeleteCategory} category={categoryToDelete} />
+      <EditCategoryModal isOpen={!!categoryToEdit} onClose={() => setCategoryToEdit(null)} onEdit={handleEditCategory} category={categoryToEdit} />
 
-      <DeleteCategoryModal
-        isOpen={!!categoryToDelete}
-        onClose={() => setCategoryToDelete(null)}
-        onDelete={handleDeleteCategory}
-        category={categoryToDelete}
-      />
-
-      <EditCategoryModal
-        isOpen={!!categoryToEdit}
-        onClose={() => setCategoryToEdit(null)}
-        onEdit={handleEditCategory}
-        category={categoryToEdit}
-      />
-
-      <div className="max-h-[calc(100vh-260px)] overflow-auto rounded border bg-white shadow">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-200">
+      <div className="max-h-[calc(100vh-260px)] overflow-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+          <table className="min-w-full divide-y divide-slate-200">
+            <thead className="bg-slate-50">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">Row #</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">Name</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">Description</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600 print:hidden">Actions</th>
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-slate-700">#</th>
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-slate-700">Category Name</th>
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-slate-700">Description</th>
+                <th className="px-6 py-4 text-center text-xs font-bold uppercase tracking-widest text-slate-700 print:hidden">Actions</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-slate-100">
               {filteredCategories.map((cat, index) => (
-                <tr key={cat.id} className="even:bg-gray-50/80 hover:bg-blue-50/50 transition-colors">
-                  <td className="px-4 py-2 text-sm">{index + 1}</td>
-                  <td className="px-4 py-2 text-sm font-medium">{cat.name}</td>
-                  <td className="px-4 py-2 text-sm text-gray-600">{cat.description}</td>
-                  <td className="px-6 py-2 text-sm space-x-4 print:hidden">
+                <tr key={cat.id} className="hover:bg-slate-50/50 transition-colors">
+                  <td className="px-6 py-4 text-sm text-slate-500 font-mono">{index + 1}</td>
+                  <td className="px-6 py-4 text-sm font-semibold text-slate-900">{cat.name}</td>
+                  <td className="px-6 py-4 text-sm text-slate-600 line-clamp-1">{cat.description}</td>
+                  <td className="px-6 py-4 text-sm space-x-3 print:hidden text-center whitespace-nowrap">
                     <button
                       onClick={() => setCategoryToEdit(cat)}
-                      className="rounded bg-amber-500 px-3 py-1 text-white hover:bg-amber-600"
+                      className="inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-indigo-500 hover:text-indigo-600 transition-all text-xs font-bold"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => setCategoryToDelete(cat)}
-                      className="rounded bg-red-500 px-3 py-1 text-white hover:bg-red-600"
+                      className="inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-slate-200 text-slate-700 hover:bg-rose-50 hover:border-rose-500 hover:text-rose-600 transition-all text-xs font-bold"
                     >
                       Delete
                     </button>
@@ -170,7 +148,7 @@ export default function Page() {
               ))}
               {!loading && filteredCategories.length === 0 && (
                   <tr>
-                      <td colSpan={4} className="px-4 py-4 text-center text-gray-500">No categories found.</td>
+                      <td colSpan={4} className="px-6 py-12 text-center text-slate-600 italic">No categories found.</td>
                   </tr>
               )}
             </tbody>

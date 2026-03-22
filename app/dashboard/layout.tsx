@@ -247,13 +247,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       onLogout={handleTimeoutLogout}
     >
       <SessionSync />
-      <div className="min-h-screen flex flex-col bg-gray-50">
-        <header className="bg-blue-600 shadow px-6 py-2 flex items-center justify-between text-white">
+      <div className="min-h-screen flex flex-col bg-slate-50/50">
+        <header className="bg-slate-900 shadow-sm px-6 py-3 flex items-center justify-between text-white border-b border-slate-800">
           <button
             onClick={() => { router.push("/dashboard"); setOpenMenu(null); }}
-            className="flex items-center gap-2 text-lg font-bold px-4 py-2 rounded hover:bg-white hover:text-blue-600 transition-colors"
+            className="flex items-center gap-2 text-lg font-bold px-4 py-2 rounded hover:bg-slate-800 transition-colors"
           >
-            <House size={20} /> Home
+            <House size={20} className="text-indigo-400" /> Home
           </button>
 
           <div className="flex items-center gap-6">
@@ -268,7 +268,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 text-lg font-bold px-4 py-2 rounded hover:bg-red-600 hover:text-white text-red-100 transition-colors ml-2 border border-transparent hover:border-red-400"
+              className="flex items-center gap-2 text-lg font-bold px-4 py-2 rounded hover:bg-rose-600/10 hover:text-rose-500 text-slate-400 transition-colors ml-2 border border-slate-700 hover:border-rose-500/50"
               title="Logout"
             >
               <LogOut size={20} />
@@ -278,16 +278,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         <main className="flex-1 p-6">{children}</main>
 
-        <footer className="bg-blue-600 text-white p-3 flex justify-between text-sm border-t border-blue-500">
-          <span className="font-semibold">
+        <footer className="bg-white text-slate-500 p-4 flex justify-between text-xs border-t border-slate-200">
+          <span className="font-medium">
             {(() => {
               const rawName = session?.user?.name || session?.user?.email || "";
-              // Remove " user" from the end (case insensitive)
               const cleanName = rawName.replace(/ user$/i, "");
-              return `User: ${cleanName}`;
+              return `System Operator: ${cleanName}`;
             })()}
           </span>
-          <span>© {new Date().getFullYear()} My Dashboard App</span>
+          <span>© {new Date().getFullYear()} Clinical Data Management System</span>
         </footer>
 
         {/* Edit Profile Modal */}

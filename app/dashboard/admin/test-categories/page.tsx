@@ -79,7 +79,7 @@ export default function Page() {
 
     const filteredCategories = categories.filter(cat => 
         cat.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        cat.description.toLowerCase().includes(searchQuery.toLowerCase())
+        cat.description?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
   return (

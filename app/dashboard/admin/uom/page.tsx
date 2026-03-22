@@ -79,7 +79,7 @@ export default function Page() {
 
     const filteredUoms = uoms.filter(uom => 
         uom.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        uom.description.toLowerCase().includes(searchQuery.toLowerCase())
+        uom.description?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
   return (

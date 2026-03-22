@@ -91,7 +91,7 @@ export default function Page() {
 
     const filteredTests = tests.filter(test => 
         test.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        test.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        test.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         test.uom_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         test.category_name?.toLowerCase().includes(searchQuery.toLowerCase())
     );

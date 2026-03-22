@@ -54,7 +54,7 @@ export default async function Page() {
           <div className="p-4 bg-slate-50 rounded-xl text-slate-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 mb-6">
             <Layers size={28} />
           </div>
-          <h2 className="text-lg font-bold text-slate-900 mb-2">Parameter Hub</h2>
+          <h2 className="text-lg font-bold text-slate-900 mb-2">Medical Test</h2>
           <p className="text-sm text-slate-500">Define normal ranges and operational test data.</p>
         </Link>
       </div>
